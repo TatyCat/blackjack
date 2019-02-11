@@ -1,5 +1,5 @@
 :root {
-  font: 16px / 1 sans-serif;
+  font: 16px / 1;
 }
 
 html {
@@ -9,4 +9,62 @@ html {
 body {
   margin: 0;
   min-height: 100%;
+  min-width: 100%;
+  background-repeat: none;
+  font-family: 'Righteous', sans-serif;
+  background-image: url("images/db09a0052a7c021eef4f639ec68c069c.jpg")
+}
+
+main{
+  margin: 3rem 1rem; 
+}
+
+/* Custom */
+header{
+  background-color: rgba(0, 98, 52, 0.991);
+  color: #461919;
+  margin-top: 0;
+  padding: 2rem;
+  letter-spacing: .6ch;
+  font-size: calc(.5vw + 1.5vh);
+}
+
+header h1{
+  text-shadow: rgb(253, 253, 244) 1.2px 1px;
+}
+
+#dealer-cards ul, #player-cards ul{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.cards ul li{
+  list-style: none;
+}
+
+.cards img{
+  width: 7vh;
+  margin: 0 .2rem;
+}
+
+.buttons{
+  text-align: center;
+}
+
+.buttons button{
+  background-color: rgb(199, 213, 9);
+  color: white;
+  border: 0;
+  padding: .7vh .7rem;
+  margin: .3rem;
+  font-weight: 700;
+  letter-spacing: .15rem;
+  text-shadow: rgb(29, 29, 29) 1px 1px;
+  font-size: calc(1vh + .5vw);
+  border-radius: 2px;
+}
+
+.reset{
+  background-color: rgb(118, 0, 0) !important;
 }

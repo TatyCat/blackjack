@@ -3,12 +3,44 @@
   <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blackjack</title>
+    <title>Shuffle Fun</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet"> 
+
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="/screen.css">
   </head>
   <body>
-    <h1 class='hello-world'></h1>
+    <header>
+      <h1>Blackjack</h1>
+    </header>
+    <main>
+<!-- Dealer Cards -->
+      <div class="cards">
+        <section id="dealer-cards">
+          <ul>
+
+          </ul>
+        </section>
+      </div>
+      
+<!-- Center buttons -->
+      <div class="buttons">
+        <button id="hit-button">Hit</button>
+        <button id="stand-button">Stand</button><br>
+        <button id="reset-button" class="reset">Reset</button>
+      </div>
+      
+<!-- Bottom Cards -->
+      <div class="cards">
+        <section id="player-cards">
+          <ul>
+            
+          </ul>
+        </section>
+      </div>
+    </main>   
+
     <script src="/main.js" charset="utf-8"></script>
   </body>
 </html>
