@@ -48,6 +48,11 @@ header h1{
   margin: 0 .2rem;
 }
 
+.cards p{
+  color: #250d0dc4;
+  text-shadow: rgba(253, 253, 244, 0.616) 1.2px 1px;
+}
+
 .buttons{
   text-align: center;
 }

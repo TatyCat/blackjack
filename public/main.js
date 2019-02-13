@@ -3,6 +3,8 @@
 const deck = []
 const dealer = []
 const player = []
+let dealerTotal = 0
+let playerTotal = 0
 
 // OnLoad: 
 // Build a Deck
@@ -17,7 +19,7 @@ const deckBuild = () => {
         suit: suit[i],
         cards: cards[j]
       }
-
+    const card = cards[i] + " of " + suit[j]
   //add the new card to the deck array.
       deck.push(card)
     }
@@ -25,13 +27,14 @@ const deckBuild = () => {
   //shuffle the new deck
   shuffle()
 
-  //2 cards per player
+  // +2 Cards to each player/Keep dealer hand hidden
   hit(dealer)
   hit(dealer)
   hit(player)
   hit(player)
-  
+  document.querySelector('#dealer-cards').style.visibility = "hidden"  
 }
+
 
 // Shuffle the Deck
 const shuffle = () => {
@@ -45,6 +48,32 @@ const shuffle = () => {
 }
 
 
+// winner--- dealer wins tie
+const showWinner = () => {
+  console.log('won')
+}
+
+const calculate = () =>{
+  console.log(dealer[0])
+  for (let i = 0; i < dealer.length; i++) {
+    console.log(dealer[0])
+    if (dealer[i].cards === "Ace"){
+      dealerTotal += 11
+    }else if (dealer[i].cards ===  "Jack" || dealer[i].cards === "Queen"|| dealer[i].cards === "King"){
+      dealerTotal += 10
+    }
+
+    console.log(player[0])
+    dealer[i].cards += dealerTotal
+    // console.log("total: " + dealerTotal)
+  }
+
+  if(dealerTotal >= 21){
+      showWinner()
+    }
+}
+
+
 
 const hit = (giveCardTo) => {
   // *Hit Button - give 1 (global) card to p2
@@ -52,7 +81,6 @@ const hit = (giveCardTo) => {
   let newCard = getAcard.cards + "_of_" + getAcard.suit
   let addLi = document.createElement('li')
   let addImg = document.createElement('img')
-
 
   //append the new card to the UI
   if (giveCardTo === dealer){
@@ -65,6 +93,9 @@ const hit = (giveCardTo) => {
     deCardAddImgElement.appendChild(addImg)
     addImg.src = "images/" + newCard + ".svg"
     deCardAddImgElement.appendChild(addImg)
+
+    //calculates and if >21 game over automatically -show dealer hand
+    calculate()
     
   }else{
     let plCardAddLiElement = document.querySelector('#player-cards ul')
@@ -79,19 +110,24 @@ const hit = (giveCardTo) => {
   }
 }
 
+
+// *Stand Button - Show Dealer Hand, 
+//Dealer hits adding new cards to the UL until >= 17
 const stand = () => {
-  
+  document.querySelector('#dealer-cards').style.visibility = "visible"  
+  while (dealerTotal >= 17){
+    // hit()
+    console.log('wooo')
+  }
 }
 
+
+// * Reset - New cards shuffle w/ all the cards back in the deck, add new cards to the players and re-hide the dealer's hand
 const reset = () =>{
-
+  deckBuild()
 }
   
   
-  // +2 Cards to each payer/Keep dealer hand hidden
-  // Hit Each Player Twice
-  // *Hit Button - Adds 1 (global) card to p2
-  //calculates and if >21 game over automatically -show dealer hand
 
 
 // --listen for hit, stand, reset button
@@ -104,9 +140,26 @@ document.addEventListener('DOMContentLoaded', deckBuild)
 
 
 
-// *Stand Button - Show Dealer Hand, Dealer hits adding new cards to the UL until >= 17
-// winnder--- dealer wins tie
-// * Reset - New cards shuffle w/ all the cards back in the deck, add new cards to the players and re-hide the dealer's hand
 
 
-// document.querySelector('h1.hello-world').textContent = 'Hello, World!'
+
+
+
+
+
+
+
+
+
+
+// const headphoneBrand = "Bose"
+// const headphonePower = 23
+// const headphoneBatteryLife = 20
+
+// const headphone ={
+//   brand:'bose',
+//   power :23, 
+//   batteryLife:20}
+
+
+

@@ -1,0 +1,42 @@
+
+BlackJack Todo: 
+☐ Create Onload event for shuffle and create deck;
+
+--once the page loads
+  ☐ --create a deck:
+    --deck has 
+
+  ✔ --shuffle a deck 
+
+  --send two cards to dealer
+
+  --send two cards to player
+
+  --show the player's cards
+
+  --keep the dealer's cards hidden
+
+
+
+
+--listen for hit click
+  --add a new card to the x who clicked
+
+  --calculate total 
+
+  --append card to 
+
+
+
+--listen for stand
+  --show the dealer's cards
+
+  --calculate; if dealer has >= 17, hit
+
+
+
+--listen for reset
+  --Clicked
+
+
+--calculate if the x has >= 21
