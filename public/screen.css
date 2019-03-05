@@ -10,54 +10,58 @@ body {
   margin: 0;
   min-height: 100%;
   min-width: 100%;
-  background-repeat: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   font-family: 'Righteous', sans-serif;
-  background-image: url("images/db09a0052a7c021eef4f639ec68c069c.jpg")
+  background-image: url("images/db09a0052a7c021eef4f639ec68c069c.jpg");
+  background-position: fixed;
 }
 
-main{
-  margin: 3rem 1rem; 
+main {
+  margin: 3rem 2rem;
 }
 
 /* Custom */
-header{
+
+header {
   background-color: rgba(0, 98, 52, 0.991);
   color: #461919;
   margin-top: 0;
-  padding: 2rem;
+  padding: 1rem;
   letter-spacing: .6ch;
   font-size: calc(.5vw + 1.5vh);
 }
 
-header h1{
+header h1 {
   text-shadow: rgb(253, 253, 244) 1.2px 1px;
 }
 
-#dealer-cards ul, #player-cards ul{
+#dealer-cards ul, #player-cards ul {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
 }
 
-.cards ul li{
+.cards ul li {
   list-style: none;
 }
 
-.cards img{
+.cards img {
   width: 7vh;
   margin: 0 .2rem;
 }
 
-.cards p{
+.cards p {
   color: #250d0dc4;
   text-shadow: rgba(253, 253, 244, 0.616) 1.2px 1px;
 }
 
-.buttons{
+.buttons {
   text-align: center;
+  margin: 4rem;
 }
 
-.buttons button{
+.buttons button {
   background-color: rgb(199, 213, 9);
   color: white;
   border: 0;
@@ -70,6 +74,6 @@ header h1{
   border-radius: 2px;
 }
 
-.reset{
+.reset {
   background-color: rgb(118, 0, 0) !important;
 }

@@ -1,20 +1,143 @@
 // BlackJack OBJ: Hit 21 or as close to it without going over. 
+let deckId
+const playerHand = {
+  cards: [],
+  totalHandValue: 0
+}
 
+const dealerHand = {
+  cards: [],
+  totalHandValue: 0
+}
+
+let numberOfCards = 2
+const callNewDeck = () => {
+  let url
+  url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
+
+  fetch(url)
+    .then(response => response.json())
+    .then(cardData => {
+      deckId = cardData.deck_id
+      //Call a shuffled deck from the api and turn it into JSON
+      let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=2'
+      fetch(drawCardsUrl)
+        .then(response2 => response2.json())
+        .then(pulledCard => {
+          console.log("Pulled Cards (" + numberOfCards + ") : ")
+          console.log(pulledCard.cards)
+          //PUSH THE CARD TO THE PLAYER'S HAND/ARRAY
+          playerHand.cards.push(pulledCard.cards[0].code)
+          playerHand.cards.push(pulledCard.cards[1].code)
+
+          console.log(pulledCard.cards[0].value)
+          console.log(pulledCard.cards[1].value)
+          if (pulledCard.cards[0].value === "ACE" || pulledCard.cards[1].value === "ACE") {
+            console.log('step 1')
+            playerHand.totalHandValue += 11
+            console.log(playerHand.totalHandValue)
+          } else if (pulledCard.cards[0].value === "JACK" || pulledCard.cards[1].value === "JACK") {
+            console.log('step 2')
+            playerHand.totalHandValue += 10
+            console.log(playerHand.totalHandValue)
+          } else if (pulledCard.cards[0].value === "QUEEN" || pulledCard.cards[1].value === "QUEEN") {
+            console.log('step 3')
+            playerHand.totalHandValue += 10
+            console.log(playerHand.totalHandValue)
+          } else if (pulledCard.cards[0].value === "KING" || pulledCard.cards[1].value === "KING") {
+            console.log('step 4')
+            playerHand.totalHandValue += 10
+            console.log(playerHand.totalHandValue)
+          } else if (typeof (pulledCard.cards[0].value) === "number") {
+            playerHand.totalHandValue += Number(pulledCard.cards[0].value)
+            playerHand.totalHandValue += Number(pulledCard.cards[0].value)
+          }
+
+
+          // playerHand.totalHandValue += Number(pulledCard.cards[0].value)
+          console.log(typeof (playerHand.totalHandValue))
+          console.log(playerHand.totalHandValue)
+          console.log(playerHand.cards)
+        })
+    })
+}
+const drawCardsFetch = (numberOfCards) => {
+  // let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=' + numberOfCards
+
+  fetch(drawCardsUrl)
+    .then(response2 => response2.json())
+    .then(pulledCard => {
+      console.log("Pulled Cards (" + numberOfCards + ") : " + pulledCard.cards)
+      // let x = document.createElement("img")
+      // x.setAttribute("src", pulledCard.cards[0].image);
+      // document.querySelector('.cards').appendChild(x)
+    })
+}
+
+
+document.addEventListener('DOMContentLoaded', callNewDeck)
+
+
+
+      // document.querySelector('.cards').textContent = cardData
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 const deck = []
 const dealer = []
 const player = []
 let dealerTotal = 0
 let playerTotal = 0
 
-// OnLoad: 
+// OnLoad:
 // Build a Deck
-const deckBuild = () => {  
+const deckBuild = () => {
   // initiaize the card deck arrays.
   const cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Ace", "Jack", "Queen", "King"]
   const suit = ["Spades", "Hearts", "Diamonds", "Clubs"]
   //create all the cards
-  for (let i = 0; i < suit.length; i++){ 
-    for (let j = 0; j < cards.length; j++){ //each suit gets a card set 
+  for (let i = 0; i < suit.length; i++){
+    for (let j = 0; j < cards.length; j++){ //each suit gets a card set
       const card = { //for each card type and suit, assign it to the object 'cards'
         suit: suit[i],
         cards: cards[j]
@@ -32,7 +155,7 @@ const deckBuild = () => {
   hit(dealer)
   hit(player)
   hit(player)
-  document.querySelector('#dealer-cards').style.visibility = "hidden"  
+  document.querySelector('#dealer-cards').style.visibility = "hidden"
 }
 
 
@@ -96,7 +219,7 @@ const hit = (giveCardTo) => {
 
     //calculates and if >21 game over automatically -show dealer hand
     calculate()
-    
+
   }else{
     let plCardAddLiElement = document.querySelector('#player-cards ul')
     plCardAddLiElement.appendChild(addLi)
@@ -111,10 +234,10 @@ const hit = (giveCardTo) => {
 }
 
 
-// *Stand Button - Show Dealer Hand, 
+// *Stand Button - Show Dealer Hand,
 //Dealer hits adding new cards to the UL until >= 17
 const stand = () => {
-  document.querySelector('#dealer-cards').style.visibility = "visible"  
+  document.querySelector('#dealer-cards').style.visibility = "visible"
   while (dealerTotal >= 17){
     // hit()
     console.log('wooo')
@@ -126,8 +249,8 @@ const stand = () => {
 const reset = () =>{
   deckBuild()
 }
-  
-  
+
+
 
 
 // --listen for hit, stand, reset button
@@ -138,7 +261,7 @@ document.querySelector('#reset-button').addEventListener('click', reset)
 
 document.addEventListener('DOMContentLoaded', deckBuild)
 
-
+*/
 
 
 

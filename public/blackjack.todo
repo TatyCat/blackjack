@@ -3,9 +3,7 @@ BlackJack Todo:
 ☐ Create Onload event for shuffle and create deck;
 
 --once the page loads
-  ☐ --create a deck:
-    --deck has 
-
+  ☐ --create a deck through api:
   ✔ --shuffle a deck 
 
   --send two cards to dealer
@@ -40,3 +38,5 @@ BlackJack Todo:
 
 
 --calculate if the x has >= 21
+
+--keep track of how many wins/losses the player has
