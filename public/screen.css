@@ -72,6 +72,7 @@ header h1 {
   text-shadow: rgb(29, 29, 29) 1px 1px;
   font-size: calc(1vh + .5vw);
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .reset {

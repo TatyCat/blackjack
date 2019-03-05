@@ -65,22 +65,33 @@ const callNewDeck = () => {
           assignCardToHand(pulledCard.cards, 3, dealerHand)
 
 
-          console.log("total:")
-          console.log(playerHand.totalHandValue)
-          console.log(dealerHand.totalHandValue)
-          console.log(playerHand.cards)
-          console.log(dealerHand.cards)
+          // console.log("total:")
+          // console.log(playerHand.totalHandValue)
+          // console.log(dealerHand.totalHandValue)
+          // console.log(playerHand.cards)
+          // console.log(dealerHand.cards)
         })
     })
 }
-
+const fetchPlayerHit = () => {
+  drawCardsFetch(1)
+}
 const drawCardsFetch = (numberOfCards) => {
   let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=' + numberOfCards
 
   fetch(drawCardsUrl)
     .then(response2 => response2.json())
     .then(pulledCard => {
-      console.log("Pulled Cards (" + numberOfCards + ") : " + pulledCard.cards)
+      playerHand.cards.push(pulledCard.cards[0].code)
+
+      console.log("Pulled Cards (" + numberOfCards + ") : ")
+      // console.log(pulledCard.cards)
+      assignCardToHand(pulledCard.cards, 0, playerHand)
+      console.log("total:")
+      console.log(playerHand.totalHandValue)
+      console.log(playerHand.cards)
+
+
       // let x = document.createElement("img")
       // x.setAttribute("src", pulledCard.cards[0].image);
       // document.querySelector('.cards').appendChild(x)
@@ -89,6 +100,7 @@ const drawCardsFetch = (numberOfCards) => {
 
 
 document.addEventListener('DOMContentLoaded', callNewDeck)
+document.querySelector('#hit-button').addEventListener('click', fetchPlayerHit)
 
 
 
