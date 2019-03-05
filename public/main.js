@@ -11,6 +11,33 @@ const dealerHand = {
 }
 
 let numberOfCards = 2
+
+const assignCardToHand = (pulledCard, cardNumber, handOfPlayer) => {
+  console.log(pulledCard[cardNumber].value)
+  //ASSIGNS THE CARD VALUE TO THE PLAYER OBJ
+  switch (pulledCard[cardNumber].value) {
+    case "ACE":
+      handOfPlayer.totalHandValue += 11
+      break
+
+    case "JACK":
+      handOfPlayer.totalHandValue += 10
+      break
+
+    case "QUEEN":
+      handOfPlayer.totalHandValue += 10
+      break
+
+    case "KING":
+      handOfPlayer.totalHandValue += 10
+      break
+
+    default:
+      handOfPlayer.totalHandValue += Number(pulledCard[cardNumber].value)
+  }
+
+}
+
 const callNewDeck = () => {
   let url
   url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
@@ -20,7 +47,7 @@ const callNewDeck = () => {
     .then(cardData => {
       deckId = cardData.deck_id
       //Call a shuffled deck from the api and turn it into JSON
-      let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=2'
+      let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=4'
       fetch(drawCardsUrl)
         .then(response2 => response2.json())
         .then(pulledCard => {
@@ -29,75 +56,26 @@ const callNewDeck = () => {
           //ASSIGNS THE CARD TO THE PLAYER'S HAND/ARRAY
           playerHand.cards.push(pulledCard.cards[0].code)
           playerHand.cards.push(pulledCard.cards[1].code)
+          dealerHand.cards.push(pulledCard.cards[2].code)
+          dealerHand.cards.push(pulledCard.cards[3].code)
 
-          //ASSIGNS THE CARD VALUE TO THE PLAYER OBJ
-          switch (pulledCard.cards[0].value) {
-            case "ACE":
-              console.log(" pulled ACE")
-              playerHand.totalHandValue += 11
+          assignCardToHand(pulledCard.cards, 0, playerHand)
+          assignCardToHand(pulledCard.cards, 1, playerHand)
+          assignCardToHand(pulledCard.cards, 2, dealerHand)
+          assignCardToHand(pulledCard.cards, 3, dealerHand)
 
-              break
-
-            case "JACK":
-              console.log(" pulled J")
-              playerHand.totalHandValue += 10
-              break
-
-            case "QUEEN":
-              console.log(" pulled Q")
-              playerHand.totalHandValue += 10
-
-              break
-
-            case "KING":
-              console.log(" pulled KING")
-              playerHand.totalHandValue += 10
-
-              break
-            default:
-              console.log("yes - number")
-              playerHand.totalHandValue += Number(pulledCard.cards[0].value)
-
-          }
-
-          switch (pulledCard.cards[1].value) {
-            case "ACE":
-              console.log(" pulled ACE")
-              playerHand.totalHandValue += 11
-
-              break
-
-            case "JACK":
-              console.log(" pulled J")
-              playerHand.totalHandValue += 10
-              break
-
-            case "QUEEN":
-              console.log(" pulled Q")
-              playerHand.totalHandValue += 10
-
-              break
-
-            case "KING":
-              console.log(" pulled KING")
-              playerHand.totalHandValue += 10
-
-              break
-            default:
-              console.log("yes - number")
-              playerHand.totalHandValue += Number(pulledCard.cards[1].value)
-
-          }
 
           console.log("total:")
           console.log(playerHand.totalHandValue)
+          console.log(dealerHand.totalHandValue)
           console.log(playerHand.cards)
+          console.log(dealerHand.cards)
         })
     })
 }
 
 const drawCardsFetch = (numberOfCards) => {
-  // let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=' + numberOfCards
+  let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=' + numberOfCards
 
   fetch(drawCardsUrl)
     .then(response2 => response2.json())
