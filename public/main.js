@@ -1,9 +1,9 @@
 // BlackJack OBJ: Hit 21 or as close to it without going over. 
 let deckId
-// const playerHand = {
-//   cards: [],
-//   totalHandValue: 0
-// }
+const playerHand = {
+  cards: [],
+  totalHandValue: 0
+}
 
 const dealerHand = {
   cards: [],
@@ -14,12 +14,6 @@ let numberOfCards = 2
 const callNewDeck = () => {
   let url
   url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
-
-
-  const playerHand = {
-    cards: [],
-    totalHandValue: 0
-  }
 
   fetch(url)
     .then(response => response.json())
@@ -32,31 +26,67 @@ const callNewDeck = () => {
         .then(pulledCard => {
           console.log("Pulled Cards (" + numberOfCards + ") : ")
           console.log(pulledCard.cards)
-          //PUSH THE CARD TO THE PLAYER'S HAND/ARRAY
+          //ASSIGNS THE CARD TO THE PLAYER'S HAND/ARRAY
           playerHand.cards.push(pulledCard.cards[0].code)
           playerHand.cards.push(pulledCard.cards[1].code)
 
-          console.log(pulledCard.cards[0].value)
-          console.log(pulledCard.cards[1].value)
-          if (pulledCard.cards[0].value === "ACE" || pulledCard.cards[1].value === "ACE") {
-            console.log('step 1')
-            playerHand.totalHandValue += 11
-            // console.log(playerHand.totalHandValue)
-          } else if (pulledCard.cards[0].value === "JACK" || pulledCard.cards[1].value === "JACK") {
-            console.log('step 2')
-            playerHand.totalHandValue += 10
-            // console.log(playerHand.totalHandValue)
-          } else if (pulledCard.cards[0].value === "QUEEN" || pulledCard.cards[1].value === "QUEEN") {
-            console.log('step 3')
-            playerHand.totalHandValue += 10
-            // console.log(playerHand.totalHandValue)
-          } else if (pulledCard.cards[0].value === "KING" || pulledCard.cards[1].value === "KING") {
-            console.log('step 4')
-            playerHand.totalHandValue += 10
-            // console.log(playerHand.totalHandValue)
-          } else if (typeof (Number(pulledCard.cards[0].value)) === "number" || typeof (Number(pulledCard.cards[1].value) === "number")) {
-            playerHand.totalHandValue = playerHand.totalHandValue + Number(pulledCard.cards[0].value)
-            playerHand.totalHandValue = playerHand.totalHandValue + Number(pulledCard.cards[1].value)
+          //ASSIGNS THE CARD VALUE TO THE PLAYER OBJ
+          switch (pulledCard.cards[0].value) {
+            case "ACE":
+              console.log(" pulled ACE")
+              playerHand.totalHandValue += 11
+
+              break
+
+            case "JACK":
+              console.log(" pulled J")
+              playerHand.totalHandValue += 10
+              break
+
+            case "QUEEN":
+              console.log(" pulled Q")
+              playerHand.totalHandValue += 10
+
+              break
+
+            case "KING":
+              console.log(" pulled KING")
+              playerHand.totalHandValue += 10
+
+              break
+            default:
+              console.log("yes - number")
+              playerHand.totalHandValue += Number(pulledCard.cards[0].value)
+
+          }
+
+          switch (pulledCard.cards[1].value) {
+            case "ACE":
+              console.log(" pulled ACE")
+              playerHand.totalHandValue += 11
+
+              break
+
+            case "JACK":
+              console.log(" pulled J")
+              playerHand.totalHandValue += 10
+              break
+
+            case "QUEEN":
+              console.log(" pulled Q")
+              playerHand.totalHandValue += 10
+
+              break
+
+            case "KING":
+              console.log(" pulled KING")
+              playerHand.totalHandValue += 10
+
+              break
+            default:
+              console.log("yes - number")
+              playerHand.totalHandValue += Number(pulledCard.cards[1].value)
+
           }
 
           console.log("total:")
@@ -65,6 +95,7 @@ const callNewDeck = () => {
         })
     })
 }
+
 const drawCardsFetch = (numberOfCards) => {
   // let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=' + numberOfCards
 
