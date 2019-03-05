@@ -1,9 +1,9 @@
 // BlackJack OBJ: Hit 21 or as close to it without going over. 
 let deckId
-const playerHand = {
-  cards: [],
-  totalHandValue: 0
-}
+// const playerHand = {
+//   cards: [],
+//   totalHandValue: 0
+// }
 
 const dealerHand = {
   cards: [],
@@ -14,6 +14,12 @@ let numberOfCards = 2
 const callNewDeck = () => {
   let url
   url = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'
+
+
+  const playerHand = {
+    cards: [],
+    totalHandValue: 0
+  }
 
   fetch(url)
     .then(response => response.json())
@@ -35,27 +41,25 @@ const callNewDeck = () => {
           if (pulledCard.cards[0].value === "ACE" || pulledCard.cards[1].value === "ACE") {
             console.log('step 1')
             playerHand.totalHandValue += 11
-            console.log(playerHand.totalHandValue)
+            // console.log(playerHand.totalHandValue)
           } else if (pulledCard.cards[0].value === "JACK" || pulledCard.cards[1].value === "JACK") {
             console.log('step 2')
             playerHand.totalHandValue += 10
-            console.log(playerHand.totalHandValue)
+            // console.log(playerHand.totalHandValue)
           } else if (pulledCard.cards[0].value === "QUEEN" || pulledCard.cards[1].value === "QUEEN") {
             console.log('step 3')
             playerHand.totalHandValue += 10
-            console.log(playerHand.totalHandValue)
+            // console.log(playerHand.totalHandValue)
           } else if (pulledCard.cards[0].value === "KING" || pulledCard.cards[1].value === "KING") {
             console.log('step 4')
             playerHand.totalHandValue += 10
-            console.log(playerHand.totalHandValue)
-          } else if (typeof (pulledCard.cards[0].value) === "number") {
-            playerHand.totalHandValue += Number(pulledCard.cards[0].value)
-            playerHand.totalHandValue += Number(pulledCard.cards[0].value)
+            // console.log(playerHand.totalHandValue)
+          } else if (typeof (Number(pulledCard.cards[0].value)) === "number" || typeof (Number(pulledCard.cards[1].value) === "number")) {
+            playerHand.totalHandValue = playerHand.totalHandValue + Number(pulledCard.cards[0].value)
+            playerHand.totalHandValue = playerHand.totalHandValue + Number(pulledCard.cards[1].value)
           }
 
-
-          // playerHand.totalHandValue += Number(pulledCard.cards[0].value)
-          console.log(typeof (playerHand.totalHandValue))
+          console.log("total:")
           console.log(playerHand.totalHandValue)
           console.log(playerHand.cards)
         })
