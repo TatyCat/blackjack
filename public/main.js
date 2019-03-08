@@ -5,6 +5,8 @@ let dealerFirstHitCard
 let dealerFirstHitCardValue
 let dealerSecondHitCard
 let dealerSecondHitCardValue
+let newCardImg
+
 
 
 const playerHand = {
@@ -16,8 +18,14 @@ const dealerHand = {
   cards: [],
   totalHandValue: 0
 }
-// document.querySelector('.cards').textContent = map.playerHand.card{}
 
+const renderCardsToScreen = (player, playerHand) => {
+  playerHand.cards.forEach(cardImg => {
+    newCardImg = document.createElement("img")
+    newCardImg.setAttribute("src", `${cardImg}`)
+    document.querySelector(`#${player}-cards ul`).appendChild(newCardImg)
+  })
+}
 
 const assignCardToHand = (pulledCard, cardNumber, handOfPlayer) => {
   //ASSIGNS THE CARD VALUE TO THE PLAYER OBJ
@@ -81,22 +89,23 @@ const callNewDeck = () => {
       fetch(drawCardsUrl)
         .then(response2 => response2.json())
         .then(pulledCard => {
-          console.log(pulledCard)
           //ASSIGNS THE CARD TO THE PLAYER'S HAND/ARRAY
-          playerHand.cards.push(pulledCard.cards[0].code)
-          playerHand.cards.push(pulledCard.cards[1].code)
-          dealerHand.cards.push(pulledCard.cards[2].code)
-          dealerHand.cards.push(pulledCard.cards[3].code)
+          playerHand.cards.push(pulledCard.cards[0].image)
+          playerHand.cards.push(pulledCard.cards[1].image)
+          dealerHand.cards.push(pulledCard.cards[2].image)
+          dealerHand.cards.push(pulledCard.cards[3].image)
           //Two extra cards in hand in case of dealer stand & assign card fetched to var
-          dealerFirstHitCard = pulledCard.cards[4].code
+          dealerFirstHitCard = pulledCard.cards[4].image
           dealerFirstHitCardValue = pulledCard.cards[4].value
-          dealerSecondHitCard = pulledCard.cards[5].code
+          dealerSecondHitCard = pulledCard.cards[5].image
           dealerSecondHitCardValue = pulledCard.cards[5].value
 
           assignCardToHand(pulledCard.cards, 0, playerHand)
           assignCardToHand(pulledCard.cards, 1, playerHand)
           assignCardToHand(pulledCard.cards, 2, dealerHand)
           assignCardToHand(pulledCard.cards, 3, dealerHand)
+
+          renderCardsToScreen("player", playerHand)
 
           calculateTotal()
         })
@@ -119,6 +128,8 @@ const declareWinner = (winnerChoosen) => {
 
 const fetchPlayerHit = () => {
   drawCardsFetch(1)
+  renderCardsToScreen("player", playerHand)
+
 }
 
 const dealerStandHit = () => {
@@ -143,11 +154,12 @@ const drawCardsFetch = (numberOfCards) => {
     .then(response2 => response2.json())
     .then(pulledCard => {
       //ASSIGNS THE CARD TO THE PLAYER'S HAND/ARRAY
-      playerHand.cards.push(pulledCard.cards[0].code)
+      playerHand.cards.push(pulledCard.cards[0].image)
       assignCardToHand(pulledCard.cards, 0, playerHand)
       console.log("fetched a Card.")
       calculateTotal()
     })
+
 }
 
 const compareHandsForWinner = () => {
