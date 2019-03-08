@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html>
+
   <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Basic BlackJack</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
 
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="/screen.css">
   </head>
+
   <body>
     <header>
       <h1>Blackjack</h1>
     </header>
     <main>
-<!-- Dealer Cards -->
+      <!-- Dealer Cards -->
       <div class="cards">
         <p>Dealer</p>
         <section id="dealer-cards">
-          <ul>
+          <!-- Dynamically render cards for DEALER here -->
 
-          </ul>
         </section>
       </div>
-      
-<!-- Center buttons -->
+
+      <!-- Center buttons -->
       <div class="buttons">
         <button id="hit-button">Hit</button>
         <button id="stand-button">Stand</button><br>
         <button id="reset-button" class="reset">Reset</button>
       </div>
-      
-<!-- Bottom Cards -->
+
+      <!-- Bottom Cards -->
       <div class="cards">
         <p>You</p>
         <section id="player-cards">
-          <ul>
-
-          </ul>
+          <!-- Dynamically render cards for Player here -->
         </section>
       </div>
-    </main>   
+      <section>
+        <p id="winners-circle"> </p>
+      </section>
+    </main>
 
     <script src="/main.js" charset="utf-8"></script>
   </body>
+
 </html>

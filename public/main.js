@@ -5,7 +5,6 @@ let dealerFirstHitCard
 let dealerFirstHitCardValue
 let dealerSecondHitCard
 let dealerSecondHitCardValue
-let newCardImg
 
 
 
@@ -20,10 +19,16 @@ const dealerHand = {
 }
 
 const renderCardsToScreen = (player, playerHand) => {
+  const listContainer = document.createElement('ul');
+  document.querySelector(`#${player}-cards`).appendChild(listContainer);
+  const listElement = document.createElement('li');
+
   playerHand.cards.forEach(cardImg => {
-    newCardImg = document.createElement("img")
+    listContainer.appendChild(listElement);
+
+    const newCardImg = document.createElement("img")
     newCardImg.setAttribute("src", `${cardImg}`)
-    document.querySelector(`#${player}-cards ul`).appendChild(newCardImg)
+    document.querySelector(`#${player}-cards ul li`).appendChild(newCardImg)
   })
 }
 
@@ -120,6 +125,7 @@ const calculateTotal = () => {
 }
 
 const declareWinner = (winnerChoosen) => {
+  document.querySelector("#winners-circle").innerText = "WOO " + winnerChoosen + " WON THE GAME!!!!"
   console.log("WOO " + winnerChoosen + " WON THE GAME!!!!")
 
   console.log(playerHand.totalHandValue)
@@ -128,8 +134,6 @@ const declareWinner = (winnerChoosen) => {
 
 const fetchPlayerHit = () => {
   drawCardsFetch(1)
-  renderCardsToScreen("player", playerHand)
-
 }
 
 const dealerStandHit = () => {
@@ -156,26 +160,27 @@ const drawCardsFetch = (numberOfCards) => {
       //ASSIGNS THE CARD TO THE PLAYER'S HAND/ARRAY
       playerHand.cards.push(pulledCard.cards[0].image)
       assignCardToHand(pulledCard.cards, 0, playerHand)
-      console.log("fetched a Card.")
-      calculateTotal()
-    })
+      // console.log("fetched a Card.")
+      newCardImg = document.createElement("img")
+      newCardImg.setAttribute("src", pulledCard.cards[0].image)
+      document.querySelector(`#player-cards ul li`).appendChild(newCardImg)
 
+    })
 }
 
 const compareHandsForWinner = () => {
   let p1 = 21 - playerHand.totalHandValue
-  let p2 = 21 - dealerHand.totalHandValue
+  let d2 = 21 - dealerHand.totalHandValue
 
   console.log("compare p & dealer:")
   console.log(p1)
-  console.log(p2)
-  if (p2 >= 0) {
-    if (p1 < p2) {
-      declareWinner("You")
-    } else {
-      declareWinner("THE DEALER")
-    }
-  } else {
+  console.log(d2)
+
+  if (d2 > 0) {
+    declareWinner("THE DEALER")
+
+    // if dealer has a negative d2 number or  is grossly over 21, 
+  } else if (d2 < 0 || dealer.totalHandValue > 22) {
     declareWinner("You")
   }
 }
