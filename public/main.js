@@ -1,6 +1,11 @@
 // BlackJack OBJ: Hit 21 or as close to it without going over. 
 let deckId
 let numberOfCards
+let dealerFirstHitCard
+let dealerFirstHitCardValue
+let dealerSecondHitCard
+let dealerSecondHitCardValue
+
 
 const playerHand = {
   cards: [],
@@ -38,6 +43,29 @@ const assignCardToHand = (pulledCard, cardNumber, handOfPlayer) => {
   }
 }
 
+const assignDealerCard = (input) => {
+  //ASSIGNS THE CARD VALUE TO THE Dealer OBJ
+  switch (input) {
+    case "ACE":
+      dealerHand.totalHandValue += 11
+      break
+
+    case "JACK":
+      dealerHand.totalHandValue += 10
+      break
+
+    case "QUEEN":
+      dealerHand.totalHandValue += 10
+      break
+
+    case "KING":
+      dealerHand.totalHandValue += 10
+      break
+
+    default:
+      dealerHand.totalHandValue += Number(input)
+  }
+}
 
 
 const callNewDeck = () => {
@@ -49,28 +77,36 @@ const callNewDeck = () => {
     .then(cardData => {
       deckId = cardData.deck_id
       //Call a shuffled deck from the api and turn it into JSON
-      let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=4'
+      let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=6'
       fetch(drawCardsUrl)
         .then(response2 => response2.json())
         .then(pulledCard => {
-          console.log("Pulled Cards : ")
-          console.log(pulledCard.cards)
+          // console.log("Pulled Cards : ")
+          // console.log(pulledCard.cards)
           //ASSIGNS THE CARD TO THE PLAYER'S HAND/ARRAY
           playerHand.cards.push(pulledCard.cards[0].code)
           playerHand.cards.push(pulledCard.cards[1].code)
           dealerHand.cards.push(pulledCard.cards[2].code)
           dealerHand.cards.push(pulledCard.cards[3].code)
+          //Two extra cards in hand in case of dealer stand & assign card fetched to var
+          dealerFirstHitCard = pulledCard.cards[4].code
+          dealerFirstHitCardValue = pulledCard.cards[4].value
+          dealerSecondHitCard = pulledCard.cards[5].code
+          dealerSecondHitCardValue = pulledCard.cards[5].value
 
           assignCardToHand(pulledCard.cards, 0, playerHand)
           assignCardToHand(pulledCard.cards, 1, playerHand)
           assignCardToHand(pulledCard.cards, 2, dealerHand)
           assignCardToHand(pulledCard.cards, 3, dealerHand)
 
+          calculateTotal()
+
           // console.log("total:")
           // console.log(playerHand.totalHandValue)
           // console.log(dealerHand.totalHandValue)
           // console.log(playerHand.cards)
           // console.log(dealerHand.cards)
+          // console.log(dealerHand.extraCardsForStand)
         })
     })
 }
@@ -83,29 +119,42 @@ const calculateTotal = () => {
 }
 
 const declareWinner = (winnerChoosen) => {
+  console.log("WOO " + winnerChoosen + " WON THE GAME!!!!")
+
   console.log(playerHand.totalHandValue)
   console.log(dealerHand.totalHandValue)
-  console.log("!!!! OMFG " + winnerChoosen + " WON THE GAME!!!!")
 }
 
 const fetchPlayerHit = () => {
-  drawCardsFetch(1, playerHand)
+  drawCardsFetch(1)
 }
 
-const fetchDealerHit = () => {
-  drawCardsFetch(1, dealerHand)
+const dealerStandHit = () => {
+  //assign card fetched to vars
+  assignDealerCard(dealerFirstHitCardValue)
+  dealerHand.cards.push(dealerFirstHitCard)
+  console.log(dealerHand.cards)
 
+  if (dealerHand.totalHandValue < 17) {
+    dealerHand.cards.push(dealerSecondHitCard)
+    assignDealerCard(dealerSecondHitCardValue)
+  }
+  if (dealerHand.totalHandValue > 17) {
+    compareHandsForWinner
+  }
+  // console.log(dealerHand.cards)
+  // console.log(dealerHand.totalHandValue)
 }
 
-const drawCardsFetch = (numberOfCards, cardHand) => {
+const drawCardsFetch = (numberOfCards) => {
   let drawCardsUrl = 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=' + numberOfCards
 
   fetch(drawCardsUrl)
     .then(response2 => response2.json())
     .then(pulledCard => {
       //ASSIGNS THE CARD TO THE PLAYER'S HAND/ARRAY
-      cardHand.cards.push(pulledCard.cards[0].code)
-      assignCardToHand(pulledCard.cards, 0, cardHand)
+      playerHand.cards.push(pulledCard.cards[0].code)
+      assignCardToHand(pulledCard.cards, 0, playerHand)
       console.log("fetched a Card.")
       calculateTotal()
     })
@@ -115,20 +164,29 @@ const compareHandsForWinner = () => {
   let p1 = 21 - playerHand.totalHandValue
   let p2 = 21 - dealerHand.totalHandValue
 
-  console.log("compare:")
+  console.log("compare p & dealer:")
   console.log(p1)
   console.log(p2)
+  if (p2 >= 0) {
+    if (p1 < p2) {
+      declareWinner("You")
+    } else {
+      declareWinner("THE DEALER")
+    }
+  } else {
+    declareWinner("You")
+  }
 }
 
-async function playerStand() {
+playerStand = () => {
   if (dealerHand.totalHandValue < 17) {
-    drawCardsFetch(1, dealerHand)
-    console.log("await")
+    dealerStandHit()
   }
-  console.log("taking a stand:")
-  console.log(dealerHand.totalHandValue)
-  await compareHandsForWinner()
+  if (dealerHand.totalHandValue > 17) {
+    compareHandsForWinner()
+  }
 }
+
 
 document.addEventListener('DOMContentLoaded', callNewDeck)
 document.querySelector('#hit-button').addEventListener('click', fetchPlayerHit)
