@@ -137,6 +137,7 @@ const fetchPlayerHit = () => {
 }
 
 const dealerStandHit = () => {
+  console.log(dealerHand.totalHandValue)
   //assign card fetched to vars
   assignDealerCard(dealerFirstHitCardValue)
   dealerHand.cards.push(dealerFirstHitCard)
@@ -165,6 +166,8 @@ const drawCardsFetch = (numberOfCards) => {
       newCardImg.setAttribute("src", pulledCard.cards[0].image)
       document.querySelector(`#player-cards ul li`).appendChild(newCardImg)
 
+      calculateTotal()
+
     })
 }
 
@@ -177,10 +180,13 @@ const compareHandsForWinner = () => {
   console.log(d2)
 
   if (d2 > 0) {
-    declareWinner("THE DEALER")
-
-    // if dealer has a negative d2 number or  is grossly over 21, 
-  } else if (d2 < 0 || dealer.totalHandValue > 22) {
+    if (p1 < d2) {
+      declareWinner("You")
+    } else {
+      declareWinner("THE DEALER")
+    }
+    // if dealer has a negative d2 number or is grossly over 21, 
+  } else if (d2 < 0 || dealerHand.totalHandValue > 22) {
     declareWinner("You")
   }
 }
@@ -194,10 +200,14 @@ playerStand = () => {
   }
 }
 
+resetGame = () => {
+  document.querySelector("#winners-circle").innerText = ""
+}
 
 document.addEventListener('DOMContentLoaded', callNewDeck)
 document.querySelector('#hit-button').addEventListener('click', fetchPlayerHit)
 document.querySelector('#stand-button').addEventListener('click', playerStand)
+document.querySelector('#reset-button').addEventListener('click', resetGame)
 
 
 // const headphoneBrand = "Bose"
