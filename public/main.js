@@ -127,7 +127,6 @@ const calculateTotal = () => {
 const declareWinner = (winnerChoosen) => {
   document.querySelector("#winners-circle").innerText = "WOO " + winnerChoosen + " WON THE GAME!!!!"
   console.log("WOO " + winnerChoosen + " WON THE GAME!!!!")
-
   console.log(playerHand.totalHandValue)
   console.log(dealerHand.totalHandValue)
 }
@@ -137,18 +136,28 @@ const fetchPlayerHit = () => {
 }
 
 const dealerStandHit = () => {
-  console.log(dealerHand.totalHandValue)
+  console.log("dealer says hit me!")
   //assign card fetched to vars
   assignDealerCard(dealerFirstHitCardValue)
   dealerHand.cards.push(dealerFirstHitCard)
-  console.log(dealerHand.cards)
+  console.log(dealerHand.totalHandValue)
+
+
+  // newCardImg = document.createElement("img")
+  // newCardImg.setAttribute("src", dealerFirstHitCard)
+  // document.querySelector(`#player-cards ul li`).appendChild(newCardImg)
 
   if (dealerHand.totalHandValue < 17) {
     dealerHand.cards.push(dealerSecondHitCard)
     assignDealerCard(dealerSecondHitCardValue)
+    console.log(dealerHand.totalHandValue)
+    renderCardsToScreen("dealer", dealerHand)
+
   }
   if (dealerHand.totalHandValue > 17) {
-    compareHandsForWinner
+    compareHandsForWinner()
+    renderCardsToScreen("dealer", dealerHand)
+
   }
 }
 
@@ -172,6 +181,7 @@ const drawCardsFetch = (numberOfCards) => {
 }
 
 const compareHandsForWinner = () => {
+
   let p1 = 21 - playerHand.totalHandValue
   let d2 = 21 - dealerHand.totalHandValue
 
@@ -179,7 +189,7 @@ const compareHandsForWinner = () => {
   console.log(p1)
   console.log(d2)
 
-  if (d2 > 0) {
+  if (d2 >= 0) {
     if (p1 < d2) {
       declareWinner("You")
     } else {
@@ -194,6 +204,7 @@ const compareHandsForWinner = () => {
 playerStand = () => {
   if (dealerHand.totalHandValue < 17) {
     dealerStandHit()
+
   }
   if (dealerHand.totalHandValue > 17) {
     compareHandsForWinner()

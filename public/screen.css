@@ -58,7 +58,7 @@ header h1 {
 
 .buttons {
   text-align: center;
-  margin: 4rem;
+  margin: 2rem;
 }
 
 .buttons button {
@@ -77,4 +77,10 @@ header h1 {
 
 .reset {
   background-color: rgb(118, 0, 0) !important;
+}
+
+#winners-circle {
+  color: rgb(118, 0, 0);
+  background-color: black;
+  padding: 1vh 1.5vh;
 }
